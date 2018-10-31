@@ -52,13 +52,18 @@ except:
 a_temp = data[0]
 b_temp = data[1]
 c_temp = data[2]
+d_temp = data[3]
 
+#rubah format
 a = float(a_temp)
 b = float(b_temp)
 
+c = " ".join([c_temp, d_temp])
+
+#cari index
 index_lat = find_lat(a)
 index_lon = find_long(b)
-index_waktu = find_time(c_temp)
+index_waktu = find_time(c)
 
 # south_north -> lat, west_east -> long
 #search result

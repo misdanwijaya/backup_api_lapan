@@ -13,13 +13,15 @@ $app->get('/[{name}]', function (Request $request, Response $response, array $ar
     return $this->renderer->render($response, 'index.phtml', $args);
 });
 
+//satu data
 $app->get("/sadewa/sst/", function (Request $request, Response $response, $args){
     $cari_lat = $request->getQueryParam("lat");
     $cari_lon = $request->getQueryParam("lon");
     $cari_tgl = $request->getQueryParam("tgl");
+    $cari_jam = $request->getQueryParam("jam");
 
     // Data yang akan dipindah ke python
-    $data = array($cari_lat,$cari_lon,$cari_tgl);
+    $data = array($cari_lat,$cari_lon,$cari_tgl,$cari_jam);
 
     // Execute the python script with the JSON data
     $result = shell_exec('python "/var/www/html/lapan-api/src/API/SST_Sadewa.py" ' . base64_encode(json_encode($data)));
