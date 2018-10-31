@@ -49,15 +49,19 @@ except:
     sys.exit(1)
 
 #Baca data
+#lat
 a_temp = data[0]
+#lon
 b_temp = data[1]
+#tgl
 c_temp = data[2]
+#jam
 d_temp = data[3]
 
 #rubah format
 a = float(a_temp)
 b = float(b_temp)
-
+#satukan tgl dan jam
 c = " ".join([c_temp, d_temp])
 
 #cari index
