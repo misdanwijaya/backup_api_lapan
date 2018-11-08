@@ -176,69 +176,89 @@ $app->get("/sadewa/sst/range/", function (Request $request, Response $response, 
     if ($lat_1 < $lat_2 and $lon_1 < $lon_2) {
         //loop
         $i=1;
-        while ($lat_1<=$lat_2 and $lon_1<=$lon_2) {
-            //cari data dengan fungsi
-            $data = cari_data($lat_1,$lon_1,$cari_tgl,$cari_jam,$i);
-           
-            //var_dump ($data);
-            $myJSON = json_encode(["status" => "success", "data_SST_Ke_".$i => $data],200);
-            echo $myJSON;
+        //mencari data per lat nila lat awal lebih kecil dari lat akhir
+        while ($lat_1<=$lat_2) {
+            //untuk mencari data per lon dari lat yang sama, bila lon awal lebih kecil dari lon akhir
+            while ($lon_1<=$lon_2) {
+                //cari data dengan fungsi
+                $data = cari_data($lat_1,$lon_1,$cari_tgl,$cari_jam,$i);
+               
+                //var_dump ($data);
+                $myJSON = json_encode(["status" => "success", "data_SST_Ke_".$i => $data],200);
+                echo $myJSON;
 
-             //iterasi
-            $i=$i+1;
+                //iterasi lon
+                $i=$i+1;
+                $lon_1 = $lon_1+0.1;
+            }
+            //iterasi lat
             $lat_1 = $lat_1+0.1;
-            $lon_1 = $lon_1+0.1;
         }
     }
     elseif ($lat_1 < $lat_2 and $lon_1 > $lon_2) {
         //loop
         $i=1;
-        while ($lat_1<=$lat_2 and $lon_1>=$lon_2) {
-            //cari data dengan fungsi
-            $data = cari_data($lat_1,$lon_1,$cari_tgl,$cari_jam,$i);
-           
-            //var_dump ($data);
-            $myJSON = json_encode(["status" => "success", "data_SST_Ke_".$i => $data],200);
-            echo $myJSON;
+        //mencari data lat bila lat awal lebih kecil dari lat akhir
+        while ($lat_1<=$lat_2) {
+            //melakukan looping dengan while dengan kondisi lon awal lebih besar dari lon akhir
+            while ($lon_1>=$lon_2) {
+                //cari data dengan fungsi
+                $data = cari_data($lat_1,$lon_1,$cari_tgl,$cari_jam,$i);
+               
+                //var_dump ($data);
+                $myJSON = json_encode(["status" => "success", "data_SST_Ke_".$i => $data],200);
+                echo $myJSON;
 
-             //iterasi
-            $i=$i+1;
+                 //iterasi untuk lon
+                $i=$i+1;
+                $lon_1 = $lon_1-0.1;
+            }
+            //iterasi untuk lat
             $lat_1 = $lat_1+0.1;
-            $lon_1 = $lon_1-0.1;
         }
     }
     elseif ($lat_1 > $lat_2 and $lon_1 < $lon_2) {
         //loop
         $i=1;
-        while ($lat_1>=$lat_2 and $lon_1<=$lon_2) {
-            //cari data dengan fungsi
-            $data = cari_data($lat_1,$lon_1,$cari_tgl,$cari_jam,$i);
-           
-            //var_dump ($data);
-            $myJSON = json_encode(["status" => "success", "data_SST_Ke_".$i => $data],200);
-            echo $myJSON;
+        //perulangan untuk lat awal lebih besar dari lat akhir
+        while ($lat_1>=$lat_2) {
+            //perulangan untuk lon awal lebih kecil dari lon akhir
+            while ($lon_1<=$lon_2) {
+                //cari data dengan fungsi
+                $data = cari_data($lat_1,$lon_1,$cari_tgl,$cari_jam,$i);
+               
+                //var_dump ($data);
+                $myJSON = json_encode(["status" => "success", "data_SST_Ke_".$i => $data],200);
+                echo $myJSON;
 
-             //iterasi
-            $i=$i+1;
+                 //iterasi untuk lon
+                $i=$i+1;
+                $lon_1 = $lon_1+0.1;
+            }
+            //iterasi untuk lat
             $lat_1 = $lat_1-0.1;
-            $lon_1 = $lon_1+0.1;
         }
     }
     elseif ($lat_1 > $lat_2 and $lon_1 > $lon_2) {
         //loop
         $i=1;
-        while ($lat_1>=$lat_2 and $lon_1>=$lon_2) {
-            //cari data dengan fungsi
-            $data = cari_data($lat_1,$lon_1,$cari_tgl,$cari_jam,$i);
-           
-            //var_dump ($data);
-            $myJSON = json_encode(["status" => "success", "data_SST_Ke_".$i => $data],200);
-            echo $myJSON;
+        //perulangan untuk lat awal lebih besar dari lat akhir
+        while ($lat_1>=$lat_2) {
+            //perulangan untuk lon awal lebih besar dari lon akhir
+            while ($lon_1>=$lon_2) {
+                //cari data dengan fungsi
+                $data = cari_data($lat_1,$lon_1,$cari_tgl,$cari_jam,$i);
+               
+                //var_dump ($data);
+                $myJSON = json_encode(["status" => "success", "data_SST_Ke_".$i => $data],200);
+                echo $myJSON;
 
-             //iterasi
-            $i=$i+1;
+                 //iterasi untuk lon
+                $i=$i+1;
+                $lon_1 = $lon_1-0.1;
+            }
+            //iterasi untuk lat
             $lat_1 = $lat_1-0.1;
-            $lon_1 = $lon_1-0.1;
         }
     }
 
