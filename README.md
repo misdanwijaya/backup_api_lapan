@@ -25,3 +25,6 @@ Run this command in the application directory to run the test suite
 	php composer.phar test
 
 That's it! Now go build something cool.
+
+## Documentation
+https://documenter.getpostman.com/view/4324634/RzZ7mf2a
