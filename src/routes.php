@@ -66,6 +66,9 @@ $app->get("/sadewa/sst/range/lat/", function (Request $request, Response $respon
     $lat_1 = floatval($cari_lat_awal);
     $lat_2 = floatval($cari_lat_akhir);
 
+    //variable untuk menampung terlebih dahulu hasil dari python ke array
+    $tampung = array();
+
     //perbandingan untuk lat awal dan akhir
     if ($lat_1 < $lat_2) {
         //loop
@@ -73,15 +76,17 @@ $app->get("/sadewa/sst/range/lat/", function (Request $request, Response $respon
         while ($lat_1<=$lat_2) {
             //cari data dengan fungsi
             $data = cari_data($lat_1,$cari_lon,$cari_tgl,$cari_jam,$i);
-           
-            //var_dump ($data);
-            $myJSON = json_encode(["status" => "success", "data_SST_Ke_".$i => $data],200);
-            echo $myJSON;
+            
+            //tampung array
+            array_push($tampung, $data);
 
              //iterasi
             $i=$i+1;
             $lat_1 = $lat_1+0.1;
         }
+        //print json
+        $myJSON = json_encode(["status" => "success", "data_SST" => $tampung],200);
+        echo $myJSON;
     }elseif ($lat_1 > $lat_2) {
          //loop
         $i=1;
@@ -89,14 +94,16 @@ $app->get("/sadewa/sst/range/lat/", function (Request $request, Response $respon
             //cari data dengan fungsi
             $data = cari_data($lat_1,$cari_lon,$cari_tgl,$cari_jam,$i);
            
-            //var_dump ($data);
-            $myJSON = json_encode(["status" => "success", "data_SST_Ke_".$i => $data],200);
-            echo $myJSON;
+            //tampung array
+            array_push($tampung, $data);
 
              //iterasi
             $i=$i+1;
             $lat_1 = $lat_1-0.1;
         }
+        //print json
+        $myJSON = json_encode(["status" => "success", "data_SST" => $tampung],200);
+        echo $myJSON;
     }
     
 });
@@ -120,6 +127,9 @@ $app->get("/sadewa/sst/range/lon/", function (Request $request, Response $respon
     $lon_1 = floatval($cari_lon_awal);
     $lon_2 = floatval($cari_lon_akhir);
 
+    //variable untuk menampung terlebih dahulu hasil dari python ke array
+    $tampung = array();
+
     //perbandingan untuk lon awal dan akhir
     if ($lon_1 < $lon_2) {
        //loop
@@ -128,29 +138,34 @@ $app->get("/sadewa/sst/range/lon/", function (Request $request, Response $respon
             //cari data dengan fungsi
             $data = cari_data($cari_lat,$lon_1,$cari_tgl,$cari_jam,$i);
            
-            //var_dump ($data);
-            $myJSON = json_encode(["status" => "success", "data_SST_Ke_".$i => $data],200);
-            echo $myJSON;
+            //tampung array
+            array_push($tampung, $data);
 
              //iterasi
             $i=$i+1;
             $lon_1 = $lon_1+0.1;
         }
-    }elseif ($lon_1 > $lon_2) {
+        //print json
+        $myJSON = json_encode(["status" => "success", "data_SST" => $tampung],200);
+        echo $myJSON;
+    }
+    elseif ($lon_1 > $lon_2) {
         //loop
         $i=1;
         while ($lon_1>=$lon_2) {
             //cari data dengan fungsi
             $data = cari_data($cari_lat,$lon_1,$cari_tgl,$cari_jam,$i);
            
-            //var_dump ($data);
-            $myJSON = json_encode(["status" => "success", "data_SST_Ke_".$i => $data],200);
-            echo $myJSON;
+            //tampung array
+            array_push($tampung, $data);
 
              //iterasi
             $i=$i+1;
             $lon_1 = $lon_1-0.1;
         }
+        //print json
+        $myJSON = json_encode(["status" => "success", "data_SST" => $tampung],200);
+        echo $myJSON;
     }
     
 });
@@ -175,6 +190,9 @@ $app->get("/sadewa/sst/range/", function (Request $request, Response $response, 
     //reset lon
     $lon_reset = floatval($cari_lon_awal);
 
+     //variable untuk menampung terlebih dahulu hasil dari python ke array
+    $tampung = array();
+
     //perbandingan untuk lat awal dan akhir
     if ($lat_1 < $lat_2 and $lon_1 < $lon_2) {
         //loop
@@ -186,10 +204,9 @@ $app->get("/sadewa/sst/range/", function (Request $request, Response $response, 
                 //cari data dengan fungsi
                 $data = cari_data($lat_1,$lon_1,$cari_tgl,$cari_jam,$i);
                
-                //var_dump ($data);
-                $myJSON = json_encode(["status" => "success", "data_SST_Ke_".$i => $data],200);
-                echo $myJSON;
-
+                //tampung array
+                array_push($tampung, $data);
+                
                 //iterasi lon
                 $i=$i+1;
                 $lon_1 = $lon_1+0.1;
@@ -200,6 +217,9 @@ $app->get("/sadewa/sst/range/", function (Request $request, Response $response, 
             $lon_1 = $lon_reset;
 
         }
+        //print json
+        $myJSON = json_encode(["status" => "success", "data_SST" => $tampung],200);
+        echo $myJSON;
     }
     elseif ($lat_1 < $lat_2 and $lon_1 > $lon_2) {
         //loop
@@ -211,9 +231,8 @@ $app->get("/sadewa/sst/range/", function (Request $request, Response $response, 
                 //cari data dengan fungsi
                 $data = cari_data($lat_1,$lon_1,$cari_tgl,$cari_jam,$i);
                
-                //var_dump ($data);
-                $myJSON = json_encode(["status" => "success", "data_SST_Ke_".$i => $data],200);
-                echo $myJSON;
+                //tampung array
+                array_push($tampung, $data);
 
                  //iterasi untuk lon
                 $i=$i+1;
@@ -225,6 +244,9 @@ $app->get("/sadewa/sst/range/", function (Request $request, Response $response, 
              //reset lon
             $lon_1 = $lon_reset;
         }
+        //print json
+        $myJSON = json_encode(["status" => "success", "data_SST" => $tampung],200);
+        echo $myJSON;
     }
     elseif ($lat_1 > $lat_2 and $lon_1 < $lon_2) {
         //loop
@@ -236,9 +258,8 @@ $app->get("/sadewa/sst/range/", function (Request $request, Response $response, 
                 //cari data dengan fungsi
                 $data = cari_data($lat_1,$lon_1,$cari_tgl,$cari_jam,$i);
                
-                //var_dump ($data);
-                $myJSON = json_encode(["status" => "success", "data_SST_Ke_".$i => $data],200);
-                echo $myJSON;
+                //tampung array
+                array_push($tampung, $data);
 
                  //iterasi untuk lon
                 $i=$i+1;
@@ -250,6 +271,9 @@ $app->get("/sadewa/sst/range/", function (Request $request, Response $response, 
             //reset lon
             $lon_1 = $lon_reset;
         }
+        //print json
+        $myJSON = json_encode(["status" => "success", "data_SST" => $tampung],200);
+        echo $myJSON;
     }
     elseif ($lat_1 > $lat_2 and $lon_1 > $lon_2) {
         //loop
@@ -261,9 +285,8 @@ $app->get("/sadewa/sst/range/", function (Request $request, Response $response, 
                 //cari data dengan fungsi
                 $data = cari_data($lat_1,$lon_1,$cari_tgl,$cari_jam,$i);
                
-                //var_dump ($data);
-                $myJSON = json_encode(["status" => "success", "data_SST_Ke_".$i => $data],200);
-                echo $myJSON;
+                //tampung array
+                array_push($tampung, $data);
 
                  //iterasi untuk lon
                 $i=$i+1;
@@ -275,6 +298,9 @@ $app->get("/sadewa/sst/range/", function (Request $request, Response $response, 
             //reset lon
             $lon_1 = $lon_reset;
         }
+        //print json
+        $myJSON = json_encode(["status" => "success", "data_SST" => $tampung],200);
+        echo $myJSON;
     }
 
 });
