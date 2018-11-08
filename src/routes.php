@@ -172,6 +172,9 @@ $app->get("/sadewa/sst/range/", function (Request $request, Response $response, 
     $lon_1 = floatval($cari_lon_awal);
     $lon_2 = floatval($cari_lon_akhir);
 
+    //reset lon
+    $lon_reset = floatval($cari_lon_awal);
+
     //perbandingan untuk lat awal dan akhir
     if ($lat_1 < $lat_2 and $lon_1 < $lon_2) {
         //loop
@@ -193,6 +196,9 @@ $app->get("/sadewa/sst/range/", function (Request $request, Response $response, 
             }
             //iterasi lat
             $lat_1 = $lat_1+0.1;
+            //reset lon
+            $lon_1 = $lon_reset;
+
         }
     }
     elseif ($lat_1 < $lat_2 and $lon_1 > $lon_2) {
@@ -215,6 +221,9 @@ $app->get("/sadewa/sst/range/", function (Request $request, Response $response, 
             }
             //iterasi untuk lat
             $lat_1 = $lat_1+0.1;
+
+             //reset lon
+            $lon_1 = $lon_reset;
         }
     }
     elseif ($lat_1 > $lat_2 and $lon_1 < $lon_2) {
@@ -237,6 +246,9 @@ $app->get("/sadewa/sst/range/", function (Request $request, Response $response, 
             }
             //iterasi untuk lat
             $lat_1 = $lat_1-0.1;
+
+            //reset lon
+            $lon_1 = $lon_reset;
         }
     }
     elseif ($lat_1 > $lat_2 and $lon_1 > $lon_2) {
@@ -259,6 +271,9 @@ $app->get("/sadewa/sst/range/", function (Request $request, Response $response, 
             }
             //iterasi untuk lat
             $lat_1 = $lat_1-0.1;
+
+            //reset lon
+            $lon_1 = $lon_reset;
         }
     }
 
