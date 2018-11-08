@@ -43,7 +43,7 @@ $app->get("/sadewa/sst/", function (Request $request, Response $response, $args)
     $data = cari_data($cari_lat,$cari_lon,$cari_tgl,$cari_jam);
 
     //rubah ke json
-    $myJSON = json_encode(["status" => "success", "data_SST_Ke_1" => $data],200);
+    $myJSON = json_encode(["status" => "success", "data_SST" => $data],200);
     echo $myJSON;
 });
 
